@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fancy DOM Form</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #formContainer {
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      width: 370px;
+      text-align: center;
+      transition: all 0.5s ease;
+    }
+
+    #formHeading {
+      color: #0073e6;
+      margin-bottom: 15px;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0 4px;
+      font-weight: bold;
+      color: #444;
+      text-align: left;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 12px;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      border: 1px solid #0073e6;
+      box-shadow: 0 0 8px #0073e6;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #43cea2, #185a9d);
+      transform: scale(1.05);
+    }
+
+    /* Shake animation */
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    .shake {
+      animation: shake 0.3s;
+    }
+
+    /* Success message */
+    #successMessage {
+      display: none;
+      font-size: 20px;
+      font-weight: bold;
+      color: green;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="formContainer">
+    <h2 id="formHeading">User Registration Form</h2>
+    <form id="myForm">
+      <label for="name">Name (Mandatory):</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email (Mandatory):</label>
+      <input type="email" id="email" required>
+
+      <label for="age">Age:</label>
+      <input type="number" id="age">
+
+      <button type="button" onclick="styleForm()">Submit</button>
+    </form>
+    <div id="successMessage">🎉 Access Granted! Welcome Aboard 🚀</div>
+  </div>
+
+  <script>
+    function styleForm() {
+      let nameField = document.getElementById("name");
+      let emailField = document.getElementById("email");
+      let form = document.getElementById("myForm");
+      let successMsg = document.getElementById("successMessage");
+      let allGood = true;
+
+      // Reset styles
+      [nameField, emailField].forEach(field => {
+        field.style.border = "1px solid #ccc";
+        field.style.backgroundColor = "#fff";
+      });
+
+      // Check Name
+      if (nameField.value.trim() === "") {
+        nameField.style.border = "2px solid red";
+        nameField.style.backgroundColor = "#ffe6e6";
+        nameField.classList.add("shake");
+        allGood = false;
+        setTimeout(() => nameField.classList.remove("shake"), 300);
+      } else {
+        nameField.style.border = "2px solid green";
+        nameField.style.backgroundColor = "#e6ffe6";
+      }
+
+      // Check Email
+      if (emailField.value.trim() === "") {
+        emailField.style.border = "2px solid red";
+        emailField.style.backgroundColor = "#ffe6e6";
+        emailField.classList.add("shake");
+        allGood = false;
+        setTimeout(() => emailField.classList.remove("shake"), 300);
+      } else {
+        emailField.style.border = "2px solid green";
+        emailField.style.backgroundColor = "#e6ffe6";
+      }
+
+      // If all mandatory fields are filled → show success
+      if (allGood) {
+        form.style.display = "none";
+        successMsg.style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>
